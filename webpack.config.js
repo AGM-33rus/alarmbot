@@ -14,6 +14,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const nodeExternals = require('webpack-node-externals');
 
 const getSrcPath = (filePath) => {
   const src = path.resolve(__dirname, 'src');
@@ -23,7 +24,9 @@ const getSrcPath = (filePath) => {
 module.exports = {
   mode: 'production',
   context: __dirname,
-  entry: getSrcPath('/apps.js'),
+  entry: getSrcPath('/index.js'),
+  externalsPresets: { node: true }, // in order to ignore built-in modules like path, fs, etc.
+  externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
   output: {
     filename: `code.js`,
     path: path.resolve(__dirname, 'dist'),
