@@ -1,15 +1,22 @@
 const { Telegraf } = require("telegraf")
 const bot = new Telegraf(process.env.BOT_TOKEN)
 
-bot.start(ctx => {
-  console.log("Received /start command")
-  try {
-    return ctx.reply("Hi")
-  } catch (e) {
-    console.error("error in start action:", e)
-    return ctx.reply("Error occured")
-  }
-})
+import { message } from 'telegraf/filters';
+
+bot.start((ctx) => ctx.reply('Добро пожаловать!'));
+bot.help((ctx) => ctx.reply('Отправь мне стикер'));
+bot.on(message('sticker'), (ctx) => ctx.reply('👍'));
+bot.hears('привет', (ctx) => ctx.reply('Привет!'));
+
+/* bot.start(ctx => {
+ *   console.log("Received /start command")
+ *   try {
+ *     return ctx.reply("Hi")
+ *   } catch (e) {
+ *     console.error("error in start action:", e)
+ *     return ctx.reply("Error occured")
+ *   }
+ * }) */
 
 // AWS event handler syntax (https://docs.aws.amazon.com/lambda/latest/dg/nodejs-handler.html)
 exports.handler = async event => {
