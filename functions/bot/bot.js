@@ -1,7 +1,7 @@
-const { Telegraf } = require("telegraf")
-const bot = new Telegraf(process.env.BOT_TOKEN)
+const { Telegraf } = require('telegraf');
+const { message } = require('telegraf/filters');
 
-import { message } from 'telegraf/filters';
+const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.start((ctx) => ctx.reply('Добро пожаловать!'));
 bot.help((ctx) => ctx.reply('Отправь мне стикер'));
@@ -19,12 +19,15 @@ bot.hears('привет', (ctx) => ctx.reply('Привет!'));
  * }) */
 
 // AWS event handler syntax (https://docs.aws.amazon.com/lambda/latest/dg/nodejs-handler.html)
-exports.handler = async event => {
-  try {
-    await bot.handleUpdate(JSON.parse(event.body))
-    return { statusCode: 200, body: "" }
-  } catch (e) {
-    console.error("error in handler:", e)
-    return { statusCode: 400, body: "This endpoint is meant for bot and telegram communication" }
-  }
-}
+/* exports.handler = async (event) => {
+ *   try {
+ *     await bot.handleUpdate(JSON.parse(event.body));
+ *     return { statusCode: 200, body: '' };
+ *   } catch (e) {
+ *     console.error('error in handler:', e);
+ *     return {
+ *       statusCode: 400,
+ *       body: 'This endpoint is meant for bot and telegram communication',
+ *     };
+ *   }
+ * }; */
